@@ -1,49 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi App Web</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #d8b1da;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      color: #333;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    #mensaje {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎥 Gestor de Videos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <aside>
+    <h1>🎥 Videos</h1>
+    <button onclick="mostrarTab('galeriaTab')">Galería</button>
+    <button onclick="mostrarTab('formularioTab')">Nuevo Video</button>
+    <button onclick="mostrarTab('shortsTab')">Nuevo Short</button>
+    <button onclick="mostrarTab('favoritosTab')">⭐ Favoritos</button>
+    <button onclick="exportarBaseDatos()">⬇️ Exportar</button>
+    <button onclick="document.getElementById('importInput').click()">⬆️ Importar</button>
+    <input type="file" id="importInput" accept=".json" style="display: none" onchange="importarBaseDatos(event)">
+  </aside>
 
-  <h1>¡Hola kitty!</h1>
-  <button onclick="saludar()">Presióname</button>
-  <div id="mensaje"></div>
+  <main>
+    <div class="tab active" id="galeriaTab">
+      <div class="filtros">
+        <input type="text" id="buscador" placeholder="Buscar por nombre, actriz o categoría" oninput="filtrarVideos()">
+        <select id="categoriaFiltro" onchange="filtrarVideos()">
+          <option value="">📂 Todas las categorías</option>
+        </select>
+      </div>
+      <div class="galeria" id="galeria"></div>
+    </div>
 
-  <script>
-    function saludar() {
-      document.getElementById("mensaje").innerText = "¡Te amo mi vida!";
-    }
-  </script>
+    <div class="tab" id="formularioTab">
+      <div class="formulario">
+        <input type="text" id="videoUrl" placeholder="Enlace del video">
+        <input type="text" id="imageUrl" placeholder="Enlace de la imagen">
+        <input type="text" id="videoNombre" placeholder="Nombre del video">
+        <input type="text" id="nuevaActriz" placeholder="Actrices (separadas por comas)">
+        <select id="actrizSelect" multiple></select>
+        <input type="text" id="nuevaCategoria" placeholder="Categorías (separadas por comas)">
+        <select id="categoriaSelect" multiple></select>
+        <input type="text" id="nuevaCarpeta" placeholder="Nueva carpeta">
+        <select id="carpetaSelect"></select>
+        <button onclick="guardarVideo()">Guardar Video</button>
+      </div>
+    </div>
 
+    <div class="tab" id="shortsTab">
+      <div class="formulario">
+        <input type="text" id="shortUrl" placeholder="Enlace del short">
+        <input type="text" id="shortImageUrl" placeholder="Enlace de la imagen vertical">
+        <button onclick="guardarShort()">Guardar Short</button>
+      </div>
+      <div class="galeria" id="galeriaShorts" style="margin-top: 20px;"></div>
+    </div>
+
+    <div class="tab" id="favoritosTab">
+      <div class="galeria" id="galeriaFavoritos"></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
